@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>home</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Abril+Fatface" rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/css/open-iconic-bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/animate.css}">
+    <link rel="stylesheet" th:href="@{/css/owl.carousel.min.css}">
+    <link rel="stylesheet" th:href="@{/css/owl.theme.default.min.css}">
+    <link rel="stylesheet" th:href="@{/css/magnific-popup.css}">
+    <link rel="stylesheet" th:href="@{/css/aos.css}">
+    <link rel="stylesheet" th:href="@{/css/ionicons.min.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-datepicker.css}">
+    <link rel="stylesheet" th:href="@{/css/jquery.timepicker.css}">
+    <link rel="stylesheet" th:href="@{/css/flaticon.css}">
+    <link rel="stylesheet" th:href="@{/css/icomoon.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div th:replace="~{commons/nav::topbar(active='index.html')}"></div>
+
+    <div class="hero-wrap js-fullheight" th:style="'background-image: url(/img/bg_1.jpg)'">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
+                <div class="col-md-9 ftco-animate mb-5 pb-5 text-center text-md-left" data-scrollax=" properties: { translateY: '70%' }">
+                    <h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Algorithm programing</h1>
+                    <p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">This is a forum for every algorithm enthusiasts!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="ftco-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="intro">
+                        <h3><span>01</span> Introduce</h3>
+                        <p>Olympiad in Informatics，信息学奥林匹克竞赛）在中国起源于 1984 年，是五大高中学科竞赛之一。</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="intro">
+                        <h3><span>02</span> OI</h3>
+                        <p>信息学奥林匹克竞赛是一门在中学生中广泛开展的学科竞赛，和物理、数学等竞赛性质相同。OI 考察的内容是参赛者运用算法、数据结构和数学知识，通过编写计算机程序解决实际问题的能力。</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="intro">
+                        <h3><span>03</span> ACM</h3>
+                        <p>一般是三个人组成一队使用一台机器，在比赛时有多次提交机会。比赛实时评测并返回结果，如果提交的结果错误会有 20 分钟的罚时，错误次数越多，加罚的时间也越长。每个题目只有在所有数据点全部正确后才能得到分数。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ftco-section testimony-section">
+        <div class="container">
+            <div class="row justify-content-center mb-5 pb-3">
+                <div class="col-md-7 text-center heading-section heading-section-white ftco-animate">
+                    <h2 class="mb-4">Our members says</h2>
+                    <p>He that can bear a reproof，and mend by it，if he is not wise，is in a fair way of being so.</p>
+                </div>
+            </div>
+            <div class="row ftco-animate">
+                <div class="col-md-12">
+                    <div class="carousel-testimony owl-carousel ftco-owl">
+                        <div class="item" th:each="user:${users}">
+                            <div class="testimony-wrap p-4 pb-5">
+                                <div class="user-img mb-5" th:style="'background-image: url('+${user.getPic()}+')'">
+                                </div>
+                                <div class="text">
+                                    <p class="mb-5" th:text="${user.getIntroduction()}"></p>
+                                    <p class="name" th:text="${user.getUsername()}"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- loader -->
+    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/jquery-migrate-3.0.1.min.js}"></script>
+    <script th:src="@{/js/popper.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/jquery.easing.1.3.js}"></script>
+    <script th:src="@{/js/jquery.waypoints.min.js}"></script>
+    <script th:src="@{/js/jquery.stellar.min.js}"></script>
+    <script th:src="@{/js/owl.carousel.min.js}"></script>
+    <script th:src="@{/js/jquery.magnific-popup.min.js}"></script>
+    <script th:src="@{/js/aos.js}"></script>
+    <script th:src="@{/js/jquery.animateNumber.min.js}"></script>
+    <script th:src="@{/js/bootstrap-datepicker.js}"></script>
+    <script th:src="@{/js/jquery.timepicker.min.js}"></script>
+    <script th:src="@{/js/scrollax.min.js}"></script>
+    <script th:src="@{/js/google-map.js}"></script>
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title>Simple example - Editor.md examples</title>
+    <link rel="stylesheet" th:href="@{/editormd/css/style.css}"/>
+    <link rel="stylesheet" th:href="@{/editormd/css/editormd.css}"/>
+    <link rel="stylesheet" th:href="@{/css/open-iconic-bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/animate.css}">
+    <link rel="stylesheet" th:href="@{/css/owl.carousel.min.css}">
+    <link rel="stylesheet" th:href="@{/css/owl.theme.default.min.css}">
+    <link rel="stylesheet" th:href="@{/css/magnific-popup.css}">
+    <link rel="stylesheet" th:href="@{/css/aos.css}">
+    <link rel="stylesheet" th:href="@{/css/ionicons.min.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-datepicker.css}">
+    <link rel="stylesheet" th:href="@{/css/jquery.timepicker.css}">
+    <link rel="stylesheet" th:href="@{/css/flaticon.css}">
+    <link rel="stylesheet" th:href="@{/css/icomoon.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="hero-wrap js-fullheight" th:style="'background-image: url(/img/bg_3.jpg)'">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center" data-scrollax-parent="true">
+            <div class="col-md-9 text-center ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
+                <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Create Article</h1>
+            </div>
+        </div>
+    </div>
+</div>
+<section class="ftco-section">
+    <div class="container">
+        <div id="layout">
+            <form th:action="@{/user/updateArticle}" method="post">
+                <input type="text" name="id" th:value="${article.getId()}" hidden>
+                <div id="test-editormd">
+                    <textarea name="content" required style="display:none;" th:text="${article.getContent()}"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="message">Please input your title:</label>
+                    <textarea name="title" required id="message" cols="1" rows="1" class="form-control" th:text="${article.getTitle()}"></textarea>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Post Article" class="btn py-3 px-4 btn-primary">
+                    <a th:href="@{/}"><button class="btn btn-primary py-3 px-5" type="button"> 回到主页 </button></a>
+                    <a th:href="@{/user/welcome}"><button class="btn btn-primary py-3 px-5" type="button"> 回到后台 </button></a>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+<script th:src="@{/editormd/js/jquery.min.js}"></script>
+<script th:src="@{/editormd/js/editormd.min.js}"></script>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/jquery-migrate-3.0.1.min.js}"></script>
+<script th:src="@{/js/popper.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/jquery.easing.1.3.js}"></script>
+<script th:src="@{/js/jquery.waypoints.min.js}"></script>
+<script th:src="@{/js/jquery.stellar.min.js}"></script>
+<script th:src="@{/js/owl.carousel.min.js}"></script>
+<script th:src="@{/js/jquery.magnific-popup.min.js}"></script>
+<script th:src="@{/js/aos.js}"></script>
+<script th:src="@{/js/jquery.animateNumber.min.js}"></script>
+<script th:src="@{/js/bootstrap-datepicker.js}"></script>
+<script th:src="@{/js/jquery.timepicker.min.js}"></script>
+<script th:src="@{/js/scrollax.min.js}"></script>
+<script th:src="@{/js/google-map.js}"></script>
+<script th:src="@{/js/main.js}"></script>
+<script type="text/javascript">
+    var testEditor;
+    $(function() {
+        testEditor = editormd("test-editormd", {
+            width: "90%",
+            height: 640,
+            syncScrolling: "single",
+            path: "../editormd/lib/",
+            //图片上传
+            imageUpload : true,
+            imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+            imageUploadURL : "/user/file/upload",
+            onload: function () {
+                console.log('onload', this);
+            },
+        });
+    });
+</script>
+</body>
+</html>

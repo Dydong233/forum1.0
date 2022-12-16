@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--configuration core file-->
+<mapper namespace="com.dydong.mapper.ArticleMapper">
+
+    <!--查询所有文章-->
+    <select id="queryArticles" resultType="Article">
+        select * from forum.article
+    </select>
+
+    <!--新增一个文章-->
+    <insert id="addArticle" parameterType="Article">
+        insert into article(author,title,content)
+        values (#{author},#{title},#{content})
+    </insert>
+
+    <!--根据id查询文章-->
+    <select id="getArticleById" resultType="Article">
+        select * from article where id=#{id}
+    </select>
+
+    <!--根据作者查询文章 -->
+    <select id="getArticleByAuthor" parameterType="String" resultType="Article">
+        select * from article where author=#{author}
+    </select>
+
+    <delete id="deleteArticleById">
+        delete from article where id=#{id}
+    </delete>
+
+    <delete id="deleteArticleByAuthor" parameterType="String">
+        delete from article where author=#{author}
+    </delete>
+
+    <select id="updateArticle" parameterType="Article">
+        update article set title=#{title},content=#{content} where id=#{id}
+    </select>
+
+</mapper>

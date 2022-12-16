@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>home</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Abril+Fatface" rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/css/open-iconic-bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/animate.css}">
+    <link rel="stylesheet" th:href="@{/css/owl.carousel.min.css}">
+    <link rel="stylesheet" th:href="@{/css/owl.theme.default.min.css}">
+    <link rel="stylesheet" th:href="@{/css/magnific-popup.css}">
+    <link rel="stylesheet" th:href="@{/css/aos.css}">
+    <link rel="stylesheet" th:href="@{/css/ionicons.min.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-datepicker.css}">
+    <link rel="stylesheet" th:href="@{/css/jquery.timepicker.css}">
+    <link rel="stylesheet" th:href="@{/css/flaticon.css}">
+    <link rel="stylesheet" th:href="@{/css/icomoon.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div th:replace="~{commons/nav::topbar(active='index.html')}"></div>
+
+    <div class="hero-wrap js-fullheight" th:style="'background-image: url(/img/bg_1.jpg)'">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
+                <div class="col-md-9 ftco-animate mb-5 pb-5 text-center text-md-left" data-scrollax=" properties: { translateY: '70%' }">
+                    <h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Algorithm programing</h1>
+                    <p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">This is a forum for every algorithm enthusiasts!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="ftco-section contact-section ftco-degree-bg">
+        <div class="container">
+            <div class="row block-9">
+                <div class="col-md-12 order-md-last pr-md-5">
+                    <input th:value="${username}" type="text" id="nickname" hidden/>
+                    <div class="table" id="message"></div>
+                    <br/>
+                    <input type="text" id="text" class="form-control" placeholder="请输入发送内容">
+                    <br/>
+                    <button class="btn btn-primary py-3 px-5" onclick="conectWebSocket()"> 加入群聊 </button>
+                    <button class="btn btn-primary py-3 px-5" onclick="closeWebSocket()"> 退出群聊 </button>
+                    <button class="btn btn-primary py-3 px-5" onclick="send()"> 发送信息 </button>
+                    <br/>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script type="text/javascript">
+        var websocket = null;
+        var nickname = document.getElementById("nickname").value;
+        function conectWebSocket(){
+            //判断当前浏览器是否支持WebSocket
+            if ('WebSocket'in window) {
+                websocket = new WebSocket("ws://localhost:8080/websocket");
+            } else {
+                alert('Not support websocket')
+            }
+            //连接发生错误的回调方法
+            websocket.onerror = function() {
+                setMessageInnerHTML("error");
+            };
+            //连接成功建立的回调方法
+            websocket.onopen = function(event) {
+                setMessageInnerHTML("Loc MSG: 成功建立连接");
+            }
+            //接收到消息的回调方法
+            websocket.onmessage = function(event) {
+                setMessageInnerHTML(event.data);
+            }
+            //连接关闭的回调方法
+            websocket.onclose = function() {
+                setMessageInnerHTML("Loc MSG:关闭连接");
+            }
+            //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+            window.onbeforeunload = function() {
+                websocket.close();
+            }
+        }
+        //将消息显示在网页上
+        function setMessageInnerHTML(innerHTML) {
+            document.getElementById('message').innerHTML += innerHTML + '<br/>';
+        }
+        //关闭连接
+        function closeWebSocket() {
+            websocket.close();
+        }
+        //发送消息
+        function send() {
+            var message = document.getElementById('text').value;
+            websocket.send(nickname+": "+message);
+            document.getElementById('text').value='';
+        }
+    </script>
+
+    <!-- loader -->
+    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/jquery-migrate-3.0.1.min.js}"></script>
+    <script th:src="@{/js/popper.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/jquery.easing.1.3.js}"></script>
+    <script th:src="@{/js/jquery.waypoints.min.js}"></script>
+    <script th:src="@{/js/jquery.stellar.min.js}"></script>
+    <script th:src="@{/js/owl.carousel.min.js}"></script>
+    <script th:src="@{/js/jquery.magnific-popup.min.js}"></script>
+    <script th:src="@{/js/aos.js}"></script>
+    <script th:src="@{/js/jquery.animateNumber.min.js}"></script>
+    <script th:src="@{/js/bootstrap-datepicker.js}"></script>
+    <script th:src="@{/js/jquery.timepicker.min.js}"></script>
+    <script th:src="@{/js/scrollax.min.js}"></script>
+    <script th:src="@{/js/google-map.js}"></script>
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--configuration core file-->
+<mapper namespace="com.dydong.mapper.CommentMapper">
+
+    <select id="queryByAid" resultType="Comment">
+        select * from comment where aid=#{aid}
+    </select>
+
+    <delete id="deleteByAuthor" parameterType="String">
+        delete from comment where author=#{author}
+    </delete>
+
+    <insert id="addComment" parameterType="Comment">
+        insert into comment(author,aid,content)
+        values (#{author},#{aid},#{content})
+    </insert>
+
+</mapper>

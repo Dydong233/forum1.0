@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>article</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Abril+Fatface" rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/editormd/css/editormd.preview.css}" />
+    <link rel="stylesheet" th:href="@{/css/open-iconic-bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/animate.css}">
+    <link rel="stylesheet" th:href="@{/css/owl.carousel.min.css}">
+    <link rel="stylesheet" th:href="@{/css/owl.theme.default.min.css}">
+    <link rel="stylesheet" th:href="@{/css/magnific-popup.css}">
+    <link rel="stylesheet" th:href="@{/css/aos.css}">
+    <link rel="stylesheet" th:href="@{/css/ionicons.min.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-datepicker.css}">
+    <link rel="stylesheet" th:href="@{/css/jquery.timepicker.css}">
+    <link rel="stylesheet" th:href="@{/css/flaticon.css}">
+    <link rel="stylesheet" th:href="@{/css/icomoon.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div th:replace="~{commons/nav::topbar}"></div>
+
+<div class="hero-wrap js-fullheight" th:style="'background-image: url(/img/bg_1.jpg)'">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center" data-scrollax-parent="true">
+            <div class="col-md-9 text-center ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
+                <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"th:text="${article.getTitle()}"></h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="ftco-section ftco-degree-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 ftco-animate">
+                <h2 class="mb-3" th:text="${article.getTitle()}"></h2>
+
+                <div>
+                    <!--文章主体内容-->
+                    <div id="doc-content" style="width: 80%">
+                        <textarea style="display:none;" placeholder="markdown" th:text="${article.getContent()}"></textarea>
+                    </div>
+
+                </div>
+
+                <div class="about-author d-flex p-4 bg-light">
+                    <div class="desc">
+                        <h3 th:text="${user.getUsername()}">George Washington</h3>
+                        <p th:text="${user.getIntroduction}"></p>
+                    </div>
+                </div>
+
+
+                <div class="pt-5 mt-5">
+                    <h3 class="mb-5" th:text="${size}+' Comments'"></h3>
+                    <h4 class="mb-5" th:if="${size}==0">此文章还没有评论，占个沙发？</h4>
+                    <ul class="comment-list">
+                        <li class="comment" th:each="comment:${comments}">
+                            <div class="vcard bio">
+                                <img th:src="${comment.getPic()}" alt="Image placeholder">
+                            </div>
+                            <div class="comment-body">
+                                <h3 th:text="${comment.getAuthor()}"></h3>
+                                <p th:text="${comment.getContent()}"></p>
+                            </div>
+                        </li>
+                    </ul>
+                    <!-- END comment-list -->
+
+                    <div class="comment-form-wrap pt-5">
+                        <h3 class="mb-5">Leave a comment</h3>
+                        <form th:action="@{/comment}" class="p-5 bg-light" method="post">
+                            <input type="text" name="aid" th:value="${article.getId()}" hidden>
+                            <div class="form-group">
+                                <label for="message">Message</label>
+                                <textarea name="content" id="message" cols="30" rows="10" class="form-control"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Post Comment" class="btn py-3 px-4 btn-primary">
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+            </div> <!-- .col-md-8 -->
+            <div class="col-md-4 sidebar ftco-animate">
+                <div class="sidebar-box">
+                    <form action="#" class="search-form">
+                        <div class="form-group">
+                            <span class="icon icon-search"></span>
+                            <input type="text" class="form-control" placeholder="Type a keyword and hit enter">
+                        </div>
+                    </form>
+                </div>
+
+                <div class="sidebar-box ftco-animate">
+                    <h3>Others Blog</h3>
+                    <div class="block-21 mb-4 d-flex" th:each="art:${articles}">
+                        <a class="blog-img mr-4" th:style="'background-image: url(/img/image_1.jpg)'"></a>
+                        <div class="text">
+                            <a th:href="@{/articleshow/}+${art.getId()}"> <h3 class="heading" th:text="${art.getTitle()}"></h3></a>
+                            <div class="meta"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</section> <!-- .section -->
+
+<!-- loader -->
+<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/jquery-migrate-3.0.1.min.js}"></script>
+<script th:src="@{/js/popper.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/jquery.easing.1.3.js}"></script>
+<script th:src="@{/js/jquery.waypoints.min.js}"></script>
+<script th:src="@{/js/jquery.stellar.min.js}"></script>
+<script th:src="@{/js/owl.carousel.min.js}"></script>
+<script th:src="@{/js/jquery.magnific-popup.min.js}"></script>
+<script th:src="@{/js/aos.js}"></script>
+<script th:src="@{/js/jquery.animateNumber.min.js}"></script>
+<script th:src="@{/js/bootstrap-datepicker.js}"></script>
+<script th:src="@{/js/jquery.timepicker.min.js}"></script>
+<script th:src="@{/js/scrollax.min.js}"></script>
+<script th:src="@{/js/google-map.js}"></script>
+<script th:src="@{/js/main.js}"></script>
+<script th:src="@{/editormd/lib/jquery.min.js}"></script>
+<script th:src="@{/editormd/lib/marked.min.js}"></script>
+<script th:src="@{/editormd/lib/prettify.min.js}"></script>
+<script th:src="@{/editormd/lib/raphael.min.js}"></script>
+<script th:src="@{/editormd/lib/underscore.min.js}"></script>
+<script th:src="@{/editormd/lib/sequence-diagram.min.js}"></script>
+<script th:src="@{/editormd/lib/flowchart.min.js}"></script>
+<script th:src="@{/editormd/lib/jquery.flowchart.min.js}"></script>
+<script th:src="@{/editormd/lib/editormd.min.js}"></script>
+
+<script type="text/javascript">
+    var testEditor;
+    $(function () {
+        testEditor = editormd.markdownToHTML("doc-content", {//注意：这里是上面DIV的id
+            htmlDecode: "style,script,iframe",
+            emoji: true,
+            taskList: true,
+            tocm: true,
+            tex: true, // 默认不解析
+            flowChart: true, // 默认不解析
+            sequenceDiagram: true, // 默认不解析
+            codeFold: true
+        });
+    });
+</script>
+</body>
+</html>
